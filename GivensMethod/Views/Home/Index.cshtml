@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Metoda rotațiilor";
+}
+
+<h2>Metoda rotațiilor</h2>
+
+<form method="post">
+<div id="system">
+<input type="number" value="0" size="3" name="a[0]" />x1 +
+<input type="number" value="0" size="3" name="a[0]" />x2 <span id="lastcol0"></span>=
+<input type="number" value="0" size="3" name="b[0]" />
+<br />
+<input type="number" value="0" size="3" name="a[1]" />x1 +
+<input type="number" value="0" size="3" name="a[1]" />x2 <span id="lastcol1"></span>=
+<input type="number" value="0" size="3" name="b[1]" />
+<br />
+</div>
+<input type="button" name="add" value="+" />
+<input type="submit" name="Solve" value="Solve" />
+</form>
+
+@if (ViewBag.a != null && ViewBag.b != null){
+    var a = ViewBag.a;
+    var b = ViewBag.b;
+    @:<br />
+    @:<br />
+    @:A:
+    @:<br />
+    
+    for (int i = 0; i < a.Length; i++)
+    {
+        for (int j = 0; j < a[i].Length; j++)
+        {
+            @a[i][j]
+            @Html.Raw(" ");
+        }
+        @:<br />
+    }
+    <br />
+    <br />
+    @:B:
+    @:<br />
+
+    for (int j = 0; j < b.Length; j++)
+    {
+            @b[j]
+            @Html.Raw(" ");
+    }    
+}
+    
+
+<script type="text/javascript">
+    var ct = 2;
+
+    function addRow(ct) {
+        var a = null;
+        for (var i = 0; i < ct; i++) {
+            a = $('<input/>', {
+                type: 'number',
+                value: '0',
+                size: '3',
+                name: 'a[' + ct + ']'//[' + i + ']'
+            });
+            a.appendTo('#system');
+            a.after('x' + (i + 1));
+                    
+            if (i > 0) {
+                a.before(' + ');
+            }
+        }
+
+        var lastCol = $('<span>', {
+            id: 'lastcol' + ct
+        });
+
+        $(a[0].nextSibling).after(lastCol)
+
+        $('<br/>').appendTo('#system');
+    }
+
+    function addCol(ct) {
+        var elOnLastCol = null;
+        for (var i = 0; i <= ct; i++) {
+            var a = $('<input/>', {
+                type: 'number',
+                value: '0',
+                size: '3',
+                name: 'a[' + i + ']'//[' + (ct + 1) + ']'
+            });
+
+            elOnLastCol = $('#lastcol' + i);
+            elOnLastCol.before(a);
+            a.after('x' + (ct + 1));
+            a.before(' + ');
+        }
+
+        var b = $('<input/>', {
+            type: 'number',
+            value: '0',
+            size: '3',
+            name: 'b[' + ct + ']'
+        });
+
+        elOnLastCol.after(b);
+        b.before('= ')
+    }
+
+    $("input[name='add']").click(function () {
+        addRow(ct);
+        addCol(ct);
+
+        //add br
+
+        ct++;
+    });
+</script>
