@@ -1,10 +1,14 @@
-﻿@{
+﻿@model IEnumerable<GivensMethod.MatrixModel>
+@{
     ViewBag.Title = "Metoda rotațiilor";
 }
 
 <h2>Metoda rotațiilor</h2>
 
 <form method="post">
+<input type="text" name="id" />
+<input type="button" name="add" value="+" />
+<input type="submit" name="Solve" value="Solve" />
 <div id="system">
 <input type="number" value="0" size="3" name="a[0]" />x1 +
 <input type="number" value="0" size="3" name="a[0]" />x2 <span id="lastcol0"></span>=
@@ -15,13 +19,13 @@
 <input type="number" value="0" size="3" name="b[1]" />
 <br />
 </div>
-<input type="button" name="add" value="+" />
-<input type="submit" name="Solve" value="Solve" />
 </form>
 
-@if (ViewBag.a != null && ViewBag.b != null){
+@if (ViewBag.a != null && ViewBag.b != null && ViewBag.id != null)
+{
     var a = ViewBag.a;
     var b = ViewBag.b;
+    @ViewBag.id
     @:<br />
     @:<br />
     @:A:
@@ -47,7 +51,18 @@
             @Html.Raw(" ");
     }    
 }
-    
+
+<br />
+<hr />
+
+@foreach (var i in Model)
+{
+    @i.id
+    @:<br />
+    @i.matrix
+    @:<hr />
+}
+  
 
 <script type="text/javascript">
     var ct = 2;

@@ -9,17 +9,21 @@ namespace GivensMethod.Controllers
 {
     public class HomeController : Controller
     {
+        MatrixDb db = new MatrixDb();
+
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var matrices = db.MatrixModels.ToList();
+
+            return View(matrices);
         }
 
         [HttpPost]
-        public ActionResult Index(double[][] a, double[] b)
+        public ActionResult Index(string id, double[][] a, double[] b)
         {
-            //TODO: solve & redirect to Load to show the result from the DB
-
+            //TODO: id should be nonempty & unique
+            //TODO: add to db
             Debug.WriteLine("a:");
             for(int i=0; i<a.Length; i++)
             {
@@ -40,13 +44,17 @@ namespace GivensMethod.Controllers
 
             ViewBag.a = a;
             ViewBag.b = b;
-            
+            ViewBag.id = id;
+
+            //TODO: redirect to "Load" to solve the system from the DB            
             return View();
         }
 
         [HttpGet]
         public ActionResult Load(string id)
         {
+
+            //if should be non empty, load from db, solve, show
             if ("" == id)
             {
                 return Content("id must be non empty");
