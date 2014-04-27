@@ -1,68 +1,32 @@
-﻿@model IEnumerable<GivensMethod.MatrixModel>
-@{
+﻿@{
     ViewBag.Title = "Metoda rotațiilor";
 }
 
 <h2>Metoda rotațiilor</h2>
+@Html.ActionLink("Rezultate anterioare", "Load")
 
+<hr />
 <form method="post">
-<input type="text" name="id" />
+<div>
+Numele sistemului: <input type="text" name="id" />
+<br />
 <input type="button" name="add" value="+" />
-<input type="submit" name="Solve" value="Solve" />
+<input type="submit" name="Solve" value="Rezolvă" />
+</div>
+<br />
 <div id="system">
-<input type="number" value="0" size="3" name="a[0]" />x1 +
-<input type="number" value="0" size="3" name="a[0]" />x2 <span id="lastcol0"></span>=
+<input type="number" value="0" size="3" name="a[0]" />x<sub>1</sub> +
+<input type="number" value="0" size="3" name="a[0]" />x<sub>2</sub> <span id="lastcol0"></span>=
 <input type="number" value="0" size="3" name="b[0]" />
 <br />
-<input type="number" value="0" size="3" name="a[1]" />x1 +
-<input type="number" value="0" size="3" name="a[1]" />x2 <span id="lastcol1"></span>=
+<input type="number" value="0" size="3" name="a[1]" />x<sub>1</sub> +
+<input type="number" value="0" size="3" name="a[1]" />x<sub>2</sub> <span id="lastcol1"></span>=
 <input type="number" value="0" size="3" name="b[1]" />
 <br />
 </div>
 </form>
 
-@if (ViewBag.a != null && ViewBag.b != null && ViewBag.id != null)
-{
-    var a = ViewBag.a;
-    var b = ViewBag.b;
-    @ViewBag.id
-    @:<br />
-    @:<br />
-    @:A:
-    @:<br />
-    
-    for (int i = 0; i < a.Length; i++)
-    {
-        for (int j = 0; j < a[i].Length; j++)
-        {
-            @a[i][j]
-            @Html.Raw(" ");
-        }
-        @:<br />
-    }
-    <br />
-    <br />
-    @:B:
-    @:<br />
-
-    for (int j = 0; j < b.Length; j++)
-    {
-            @b[j]
-            @Html.Raw(" ");
-    }    
-}
-
-<br />
-<hr />
-
-@foreach (var i in Model)
-{
-    @i.id
-    @:<br />
-    @i.matrix
-    @:<hr />
-}
-  
+@Html.ValidationSummary()
 
 <script type="text/javascript">
     var ct = 2;
@@ -74,10 +38,10 @@
                 type: 'number',
                 value: '0',
                 size: '3',
-                name: 'a[' + ct + ']'//[' + i + ']'
+                name: 'a[' + ct + ']'
             });
             a.appendTo('#system');
-            a.after('x' + (i + 1));
+            a.after('x<sub>' + (i + 1) + '</sub>');
                     
             if (i > 0) {
                 a.before(' + ');
@@ -88,7 +52,7 @@
             id: 'lastcol' + ct
         });
 
-        $(a[0].nextSibling).after(lastCol)
+        $(a[0].nextSibling.nextSibling).after(lastCol)
 
         $('<br/>').appendTo('#system');
     }
@@ -100,12 +64,12 @@
                 type: 'number',
                 value: '0',
                 size: '3',
-                name: 'a[' + i + ']'//[' + (ct + 1) + ']'
+                name: 'a[' + i + ']'
             });
 
             elOnLastCol = $('#lastcol' + i);
             elOnLastCol.before(a);
-            a.after('x' + (ct + 1));
+            a.after('x<sub>' + (ct + 1) + '</sub>');
             a.before(' + ');
         }
 
@@ -123,8 +87,6 @@
     $("input[name='add']").click(function () {
         addRow(ct);
         addCol(ct);
-
-        //add br
 
         ct++;
     });

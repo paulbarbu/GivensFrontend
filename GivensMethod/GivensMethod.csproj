@@ -120,6 +120,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\GivensMethod.cs" />
+    <Compile Include="Algorithms\Matrix.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -133,6 +135,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MatrixDb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoadViewModel.cs" />
+    <Compile Include="Models\ModelBinders\SystemModelBinder.cs" />
+    <Compile Include="Models\SystemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,8 +243,9 @@
       <LastGenOutput>MatrixDb.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Content Include="Views\Home\Load.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

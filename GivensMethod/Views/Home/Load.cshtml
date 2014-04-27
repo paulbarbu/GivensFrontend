@@ -1,0 +1,61 @@
+﻿@model GivensMethod.Models.LoadViewModel
+@{
+    ViewBag.Title = "Rezultate";
+}
+
+<h2>Rezultate</h2>
+
+@Html.ActionLink("Acasă", "/")
+<hr />
+@if (0 == Model.ids.Count())
+{
+    @: Nu există niciun sistem, va rugăm adăugați unul folosind link-ul "Acasă"
+}
+else
+{
+<form method="post">
+<select name="id">
+@foreach (var id in Model.ids)
+{
+    @:<option value="@id">@id</option>
+}
+</select>
+
+<input type="submit" name="Load" value="Încarcă" />
+</form>
+}
+
+@Html.ValidationSummary()
+
+@if (null != Model.X) {
+<div>
+    @for (int i=0; i<Model.A.n; i++){
+        bool first = true;
+        for(int j=0; j<Model.A.m; j++){
+            if (Model.A[i, j] != 0)
+            {
+                if (!first && Model.A[i, j] > 0)
+                {
+                   @Html.Raw("+")
+                }
+                @Html.Raw(Model.A[i, j] + "x<sub>" + (j + 1) + "</sub>")
+                
+                first = false;
+            }
+        }
+        @: = @Model.b[i]
+        @:<br />
+    }
+    
+    <h4>Soluția sistemului <i>@Model.id</i>:</h4>
+    <div>
+        @for (int i = 0; i < Model.A.n; i++)
+        {        
+            @Html.Raw("x<sub>" + (i+1) + "</sub> = " + Model.X[i])
+            @:<br />
+            @* TODO: FORMAT to 3 digits
+            *@
+        }
+    </div>
+</div>
+}
