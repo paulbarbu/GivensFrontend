@@ -76,8 +76,6 @@ namespace GivensMethod.Controllers
 
         public ActionResult Load(string id)
         {
-            //id should be non empty, load from db if id exists, solve, show            
-
             var ids = from s in db.MatrixModels
                       orderby s.id
                       select s.id;
