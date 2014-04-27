@@ -9,7 +9,7 @@ using GivensAlgorithms;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace GivensMethod.Controllers
 {
@@ -41,28 +41,9 @@ namespace GivensMethod.Controllers
                 {
                     MatrixModel model = new MatrixModel();
                     model.id = system.id;
-                    model.matrix = "";
 
-                    StreamReader reader;
-                    Stream ms = new MemoryStream();
-                    IFormatter f = new BinaryFormatter();
-
-                    f.Serialize(ms, system.a);
-
-                    using (reader = new StreamReader(ms, Encoding.ASCII))
-                    {
-                        ms.Position = 0;
-                        model.matrix += reader.ReadToEnd();
-                    }
-
-                    ms = new MemoryStream();
-                    f.Serialize(ms, system.b);
-
-                    using (reader = new StreamReader(ms, Encoding.ASCII))
-                    {
-                        ms.Position = 0;
-                        model.matrix += MARKER + reader.ReadToEnd();
-                    }
+                    model.matrix = JsonConvert.SerializeObject(system.a);
+                    model.matrix += MARKER + JsonConvert.SerializeObject(system.b);
 
                     db.MatrixModels.AddObject(model);
                     db.SaveChanges();
@@ -122,29 +103,9 @@ namespace GivensMethod.Controllers
             int pos = system.IndexOf(MARKER);
             string aMatrix = system.Substring(0, pos);
             string bMatrix = system.Substring(pos + MARKER.Length);
-            
-            MemoryStream ms = new MemoryStream();
-            StreamWriter sw;
-            IFormatter f = new BinaryFormatter();
 
-            using (sw = new StreamWriter(ms))
-            {
-                sw.Write(aMatrix);
-                sw.Flush();
-
-                ms.Position = 0;
-                a = (double[,])f.Deserialize(ms);
-            }
-
-            ms = new MemoryStream();
-            using (sw = new StreamWriter(ms))
-            {
-                sw.Write(bMatrix);
-                sw.Flush();
-
-                ms.Position = 0;
-                b = (double[])f.Deserialize(ms);
-            }
+            a = JsonConvert.DeserializeObject<double[,]>(aMatrix);
+            b = JsonConvert.DeserializeObject<double[]>(bMatrix);
             
             return Tuple.Create<double[,], double[]>(a, b);
         }
