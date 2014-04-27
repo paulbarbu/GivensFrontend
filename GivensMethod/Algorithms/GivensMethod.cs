@@ -51,7 +51,19 @@ namespace GivensAlgorithms
                 }
             }
 
-            computeQ();
+            if (G.Count > 0)
+            {
+                computeQ();
+            }
+            else
+            {
+                Q = new Matrix(A.n, A.n);
+
+                for (int i = 0; i < A.n; i++)
+                {
+                    Q[i, i] = 1;
+                }
+            }
             
             return solveUpper();
         }
