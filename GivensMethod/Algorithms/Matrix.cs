@@ -147,13 +147,13 @@ namespace GivensAlgorithms
             for(int i=0; i<n; i++){
                 if (0 == m)
                 {
-                    strBuilder.Append(a[i, 0].ToString());
+                    strBuilder.Append(String.Format("{0,3:f3}", a[i, 0]));
                 }
                 else
                 {
                     for (int j = 0; j < m; j++)
                     {
-                        strBuilder.Append(a[i, j].ToString() + " ");
+                        strBuilder.Append(String.Format("{0,3:f3} ", a[i, j]));
                     }
                 }
                 strBuilder.AppendLine();
