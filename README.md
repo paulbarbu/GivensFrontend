@@ -1,6 +1,6 @@
 Web front-end for the Givens method of solving systems of linear equations
 ==========================================================================
-This is just a C# adn Javascript web application that implements a UI for
+This is just a C# and Javascript web application that implements a UI for
 solving systems of linear equations using the
 [Givens method](https://github.com/paullik/GivensAlgorithm)
 
